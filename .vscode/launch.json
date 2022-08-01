@@ -4,11 +4,16 @@
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
-            "name": "Python: 当前文件",
+            "name": "Python: train",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/sr.py",
+            "args": [
+                "-p","train",
+                "-c","config/sr_sr3_64_512.json",
+            ],
             "console": "integratedTerminal"
         }
     ]

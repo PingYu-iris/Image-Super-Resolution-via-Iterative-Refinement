@@ -9,6 +9,7 @@ from core.wandb_logger import WandbLogger
 from tensorboardX import SummaryWriter
 import os
 import numpy as np
+from tqdm import tqdm
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -26,7 +27,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     opt = Logger.parse(args)
     # Convert to NoneDict, which return None for missing key.
-    opt = Logger.dict_to_nonedict(opt)
+    opt = Logger.dict_to_nonedict(opt)    
 
     # logging
     torch.backends.cudnn.enabled = True
@@ -78,14 +79,20 @@ if __name__ == "__main__":
     diffusion.set_new_noise_schedule(
         opt['model']['beta_schedule'][opt['phase']], schedule_phase=opt['phase'])
     if opt['phase'] == 'train':
+        logger.info('Begin training.')
         while current_step < n_iter:
             current_epoch += 1
-            for _, train_data in enumerate(train_loader):
+            should_backward = False
+            # for _, train_data in enumerate(train_loader):
+            for train_data in tqdm(train_loader):
                 current_step += 1
                 if current_step > n_iter:
                     break
                 diffusion.feed_data(train_data)
-                diffusion.optimize_parameters()
+                if (current_epoch + 1) % opt['datasets']['train']['gradient_accumulations'] == 0:
+                    should_backward = True
+                diffusion.optimize_parameters(should_backward)
+                should_backward = False
                 # log
                 if current_step % opt['train']['print_freq'] == 0:
                     logs = diffusion.get_current_log()

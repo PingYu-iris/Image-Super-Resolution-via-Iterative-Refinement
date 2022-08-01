@@ -157,6 +157,8 @@ def prepare(img_path, out_path, n_worker, sizes=(16, 128), resample=Image.BICUBI
             if lmdb_save:
                 with env.begin(write=True) as txn:
                     txn.put('length'.encode('utf-8'), str(total).encode('utf-8'))
+            if total>100:
+                break
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

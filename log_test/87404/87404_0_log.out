@@ -1,0 +1,5 @@
+submitit INFO (2022-07-19 00:01:11,255) - Starting with JobEnvironment(job_id=87404, hostname=a100-st-p4d24xlarge-38, local_rank=0(1), node=0(1), global_rank=0(1))
+submitit INFO (2022-07-19 00:01:11,255) - Loading pickle: /data/home/pingyu/upsampler/Image-Super-Resolution-via-Iterative-Refinement/log_test/87404/87404_submitted.pkl
+test cuda:  False
+device:  0
+submitit INFO (2022-07-19 00:01:14,405) - Job completed successfully

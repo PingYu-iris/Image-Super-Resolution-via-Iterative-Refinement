@@ -113,4 +113,19 @@ def define_G(opt):
     if opt['gpu_ids'] and opt['distributed']:
         assert torch.cuda.is_available()
         netG = nn.DataParallel(netG)
+    assert torch.cuda.is_available()
+    
+    print("="*100)
+    print(torch.cuda.device_count())
+    print("="*100)
+    model = netG
+    param_size = 0
+    for param in model.parameters():
+        param_size += param.nelement() * param.element_size()
+    buffer_size = 0
+    for buffer in model.buffers():
+        buffer_size += buffer.nelement() * buffer.element_size()
+    size_all_mb = (param_size + buffer_size) / 1024**2
+    print('model size: {:.3f}MB'.format(size_all_mb))
+    # breakpoint()
     return netG

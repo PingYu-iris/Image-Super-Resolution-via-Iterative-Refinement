@@ -190,6 +190,7 @@ class UNet(nn.Module):
         pre_channel = inner_channel
         feat_channels = [pre_channel]
         now_res = image_size
+        # breakpoint()
         downs = [nn.Conv2d(in_channel, inner_channel,
                            kernel_size=3, padding=1)]
         for ind in range(num_mults):

@@ -1,0 +1,4 @@
+submitit INFO (2022-07-19 18:47:11,510) - Starting with JobEnvironment(job_id=88827, hostname=a100-st-p4d24xlarge-101, local_rank=0(1), node=0(1), global_rank=0(1))
+submitit INFO (2022-07-19 18:47:11,511) - Loading pickle: /data/home/pingyu/upsampler/Image-Super-Resolution-via-Iterative-Refinement/log_test/88827_submitted.pkl
+Is gpu available:  True
+submitit INFO (2022-07-19 18:47:22,944) - Job completed successfully

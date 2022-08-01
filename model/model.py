@@ -39,20 +39,22 @@ class DDPM(BaseModel):
             self.optG = torch.optim.Adam(
                 optim_params, lr=opt['train']["optimizer"]["lr"])
             self.log_dict = OrderedDict()
+        self.gradient_accumulations = opt['datasets']['train']['gradient_accumulations']
         self.load_network()
         self.print_network()
 
     def feed_data(self, data):
         self.data = self.set_device(data)
 
-    def optimize_parameters(self):
-        self.optG.zero_grad()
+    def optimize_parameters(self,should_backward):
         l_pix = self.netG(self.data)
         # need to average in multi-gpu
         b, c, h, w = self.data['HR'].shape
         l_pix = l_pix.sum()/int(b*c*h*w)
-        l_pix.backward()
-        self.optG.step()
+        (l_pix/self.gradient_accumulations).backward()
+        if should_backward:
+            self.optG.step()
+            self.optG.zero_grad()
 
         # set log
         self.log_dict['l_pix'] = l_pix.item()
