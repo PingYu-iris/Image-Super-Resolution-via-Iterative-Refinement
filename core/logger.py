@@ -34,8 +34,10 @@ def parse(args):
     # set log directory
     if args.debug:
         opt['name'] = 'debug_{}'.format(opt['name'])
+    # experiments_root = os.path.join(
+    #     'experiments', '{}_{}'.format(opt['name'], get_timestamp()))
     experiments_root = os.path.join(
-        'experiments', '{}_{}'.format(opt['name'], get_timestamp()))
+        '/fsx-html2/pingyu/sr3_experiments', '{}_{}'.format(opt['name'], get_timestamp()))
     opt['path']['experiments_root'] = experiments_root
     for key, path in opt['path'].items():
         if 'resume' not in key and 'experiments' not in key:

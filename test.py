@@ -10,11 +10,11 @@ def add(a, b):
 executor = submitit.AutoExecutor(folder="log_test")
 
 # set parameters for running the job
-num_gpus_per_node = 1
+gpus_per_node_per_node = 1
 nodes = 1
 executor.update_parameters(
-        gpus_per_node=num_gpus_per_node,
-        tasks_per_node=num_gpus_per_node,  # one task per GPU
+        gpus_per_node=gpus_per_node_per_node,
+        tasks_per_node=gpus_per_node_per_node,  # one task per GPU
         cpus_per_task=10, # 10 cpus per gpu is generally good
         nodes=nodes,
         # Below are cluster dependent parameters
